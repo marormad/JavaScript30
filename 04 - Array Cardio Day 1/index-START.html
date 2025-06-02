@@ -53,12 +53,13 @@
     }
     console.table(wholeNames);
 
-                // Using map method:
-                const wholeNamesWithMap = inventors.map(inventor => inventor.first + " " + inventor.last);
-                console.table(wholeNamesWithMap);
+    // Using map method:
+    const wholeNamesWithMap = inventors.map(inventor => inventor.first + " " + inventor.last);
+    //console.table(wholeNamesWithMap);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // First, we create an array to store names + birthyears
     const sortedByTotalAge = [];
     for (let i = 0; i < inventors.length; i++) {
       sortedByTotalAge[i] = {
@@ -70,26 +71,65 @@
     sortedByTotalAge.sort((a,b) => a.birthYear - b.birthYear);
     console.table(sortedByTotalAge);
 
-                // Same thing but using map()
-                const sortedByTotalAgeWithMap = inventors.map(invent => ({
-                                                                        name: `${invent.first} ${invent.last}`,
-                                                                        birthYear: invent.year}
-                                                                      ));
-                // Now we sort by birthdate
-                sortedByTotalAgeWithMap.sort((a,b) => a.birthYear - b.birthYear);
-                console.table(sortedByTotalAgeWithMap);
+    // Same thing but using map()
+    const sortedByTotalAgeWithMap = inventors.map(invent => ({
+                                                            name: `${invent.first} ${invent.last}`,
+                                                            birthYear: invent.year}
+                                                          ));
+    // Now we sort by birthdate
+    sortedByTotalAgeWithMap.sort((a,b) => a.birthYear - b.birthYear);
+    //console.table(sortedByTotalAgeWithMap);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
-
+    function yearsLived(inv) {
+      return inv.passed - inv.year;
+    }
+    const totalYearsLived = inventors.reduce((total, current) => total + yearsLived(current), 0);
+    console.log('All the inventors lived a total of ' + totalYearsLived + ' years.');
+                
     // 5. Sort the inventors by years lived
+    // Same way we did on #3, we store names + years lived in a new array
+    const sortedByYearsLived = [];
+    for (let i = 0; i < inventors.length; i++) {
+      sortedByYearsLived[i] = {
+                            name: inventors[i].first + " " + inventors[i].last,
+                            yearsLived: yearsLived(inventors[i])
+                          };
+    }
+    // Now we sort by years lived
+    sortedByYearsLived.sort((a,b) => a.yearsLived - b.yearsLived);
+    console.table(sortedByYearsLived);
+
+/* 
+After finishing #6 we comment it so we can keep going
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // First, we use DevTools to find the name of the class that contains the list of items
+    // in this case, class = 'mw-category'
+    const category = document.querySelector('.mw-category');
+    const links = category.querySelectorAll('a');
+    arrayLinks = Array.from(links); // That will let us use the map function
+    // We will convert that list of links to a list of names.
+    // Then we will filter the list
+    const names = arrayLinks.map(link => link.textContent);
 
+    filteredNames = names.filter(name => name.includes("de"));
+*/
 
-    // 7. sort Exercise
+    // 7. Sort Exercise
     // Sort the people alphabetically by last name
+
+    // First, we separate first and last names in a new array
+    const sortedPeople = [];
+    for (i = 0; i < people.length; i++) {
+      sortedPeople[i] = people[i].split(',');
+    }
+    // Now we can easily sort them by their last name    
+    sortedPeople.sort((a, b) => a[0].trim().localeCompare(b[0]));
+
+    console.table(sortedPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
