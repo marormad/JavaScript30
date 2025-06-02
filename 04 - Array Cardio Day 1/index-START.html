@@ -38,12 +38,46 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    function checkYear(object){      
+      return (object.year >= 1500 && object.year < 1600);
+    }
+    const bornFifteens = inventors.filter(checkYear);
+    //console.log(bornFifteens);
+    console.table(bornFifteens);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const wholeNames = [];
+    for (let i = 0; i < inventors.length; i++) {
+      wholeNames.push(inventors[i].first + " " + inventors[i].last);
+    }
+    console.table(wholeNames);
+
+                // Using map method:
+                const wholeNamesWithMap = inventors.map(inventor => inventor.first + " " + inventor.last);
+                console.table(wholeNamesWithMap);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sortedByTotalAge = [];
+    for (let i = 0; i < inventors.length; i++) {
+      sortedByTotalAge[i] = {
+                            name: inventors[i].first + " " + inventors[i].last,
+                            birthYear: inventors[i].year
+                          };
+    }
+    // Now we sort by birthdate
+    sortedByTotalAge.sort((a,b) => a.birthYear - b.birthYear);
+    console.table(sortedByTotalAge);
+
+                // Same thing but using map()
+                const sortedByTotalAgeWithMap = inventors.map(invent => ({
+                                                                        name: `${invent.first} ${invent.last}`,
+                                                                        birthYear: invent.year}
+                                                                      ));
+                // Now we sort by birthdate
+                sortedByTotalAgeWithMap.sort((a,b) => a.birthYear - b.birthYear);
+                console.table(sortedByTotalAgeWithMap);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
