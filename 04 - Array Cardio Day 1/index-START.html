@@ -133,7 +133,26 @@ After finishing #6 we comment it so we can keep going
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van',
+                 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    
+    // One array (Set) to store only unique items; and an array to count instances
+    // We need to re-convert the set to an array again to use its methods
+    const uniqueData = Array.from(new Set(data));
+    //This array must have the same length as uniqueData; and is initialized with 0's
+    const uniqueReps = Array(uniqueData.length).fill(0);
+
+    // A loop to compare every item in the Set with every item in the data array.
+    // It will add 1 to the total value for the current item for every instance
+    for (let i = 0; i < uniqueData.length; i++) {
+      for (let j = 0; j < data.length; j++) {
+        if (uniqueData[i] == data[j]) {uniqueReps[i] += 1;}
+      }
+    }
+    
+    console.table(uniqueData);
+    console.table(uniqueReps);
+
 
   </script>
 </body>
